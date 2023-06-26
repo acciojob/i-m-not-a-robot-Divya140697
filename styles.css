@@ -1,1 +1,20 @@
 /*  your css code here. If applicable */
+#image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+#para {
+  margin-top: 10px;
+}
