@@ -1,56 +1,54 @@
-//your JS code here. If required.
-// Array of image URLs
-const imageUrls = [
-  'image1.jpg',
-  'image2.jpg',
-  'image3.jpg',
-  'image4.jpg',
-  'image5.jpg',
-  'image6.jpg'
-];
+document.addEventListener('DOMContentLoaded', () => {
+  const images = document.querySelectorAll('img');
+  const resetButton = document.getElementById('reset');
+  const verifyButton = document.getElementById('verify');
+  const messagePara = document.getElementById('para');
+  let clickedImages = [];
 
-// Shuffle the image URLs randomly
-const shuffledImageUrls = shuffleArray(imageUrls);
+  // Add event listeners to the images
+  images.forEach(image => {
+    image.addEventListener('click', handleClick);
+  });
 
-// Get the image elements
-const imageElements = document.querySelectorAll('img');
+  // Add event listener to the reset button
+  resetButton.addEventListener('click', reset);
 
-// Assign the image URLs to the image elements
-for (let i = 0; i < imageElements.length; i++) {
-  imageElements[i].src = shuffledImageUrls[i];
-}
+  // Add event listener to the verify button
+  verifyButton.addEventListener('click', verify);
 
-// Variables to track selected images
-let selectedImage1 = null;
-let selectedImage2 = null;
+  // Reset the state to the initial state
+  reset();
 
-// Function to select an image
-function selectImage(element) {
-  if (!selectedImage1) {
-    selectedImage1 = element;
-    selectedImage1.classList.add('selected');
-    document.getElementById('reset').style.display = 'block';
-  } else if (!selectedImage2 && element !== selectedImage1) {
-    selectedImage2 = element;
-    selectedImage2.classList.add('selected');
-    document.getElementById('verify').style.display = 'block';
+  // Handle image click event
+  function handleClick(event) {
+    const clickedImage = event.target;
+
+    if (!clickedImages.includes(clickedImage)) {
+      clickedImages.push(clickedImage);
+
+      if (clickedImages.length === 2) {
+        verifyButton.style.display = 'block';
+      }
+    }
   }
-}
 
-// Function to reset the selected images and buttons
-function reset() {
-  selectedImage1.classList.remove('selected');
-  selectedImage2.classList.remove('selected');
-  selectedImage1 = null;
-  selectedImage2 = null;
-  document.getElementById('reset').style.display = 'none';
-  document.getElementById('verify').style.display = 'none';
-  document.getElementById('para').textContent = '';
-}
+  // Reset the state to the initial state
+  function reset() {
+    clickedImages = [];
+    resetButton.style.display = 'none';
+    verifyButton.style.display = 'none';
+    messagePara.textContent = '';
+    shuffleImages();
+  }
 
-// Function to verify the selected images
-function verify() {
-  const class1 = selectedImage1.className;
-  const class2 = selectedImage2.className;
+  // Shuffle the images randomly
+  function shuffleImages() {
+    const classNames = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
+    classNames.sort(() => Math.random() - 0.5);
 
-	  }
+    images.forEach((image, index) => {
+      image.className = classNames[index];
+    });
+  }
+
+  // Verify
